@@ -1,6 +1,6 @@
 {
-  "name": "Resume Builder",
-  "description": "An advanced, fully client-side resume builder featuring 10 custom templates, real-time preview, deep customization options, and seamless import/export functionality.",
+  "name": "Velicx Resume Workbench",
+  "description": "Velicx Resume Workbench — an advanced, fully client-side resume builder featuring 10 custom templates, real-time preview, deep customization options, and seamless import/export functionality.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -354,7 +354,7 @@ export default function ResumeForm({ data, onChangeData }: ResumeFormProps) {
 
   // --- FORM INPUT COMPONENT WRAPPER CLASS ---
   const formInput = (name: string, label: string, val: string, handle: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder = '') => (
-    <div className="flex flex-col gap-1 flex-1">
+    <div className="flex flex-col gap-1 flex-1 min-w-0">
       <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">{label}</label>
       <input
         type="text"
@@ -362,7 +362,7 @@ export default function ResumeForm({ data, onChangeData }: ResumeFormProps) {
         value={val || ''}
         placeholder={placeholder}
         onChange={handle}
-        className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-sm border border-slate-200 focus:border-indigo-500 rounded-lg p-2.5 outline-none transition-colors"
+        className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-base sm:text-sm border border-slate-200 focus:border-indigo-500 rounded-lg p-3 sm:p-2.5 outline-none transition-colors"
       />
     </div>
   );
@@ -370,23 +370,23 @@ export default function ResumeForm({ data, onChangeData }: ResumeFormProps) {
   return (
     <div className="flex flex-col md:flex-row h-full">
       {/* LEFT NAVIGATION COLUMN */}
-      <div className="w-full md:w-56 shrink-0 md:border-r border-slate-200/60 p-2 md:p-3 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-x-visible no-scrollbar">
+      <div className="w-full md:w-56 shrink-0 md:border-r border-slate-200/60 p-2 md:p-3 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-x-visible no-scrollbar md:sticky md:top-0 bg-white md:bg-transparent border-b md:border-b-0 border-slate-100">
         {[
-          { id: 'personal', name: 'Profile Head', icon: <User className="w-4 h-4" /> },
-          { id: 'experience', name: 'Work Profile', icon: <Briefcase className="w-4 h-4" /> },
+          { id: 'personal', name: 'Profile', icon: <User className="w-4 h-4" /> },
+          { id: 'experience', name: 'Work', icon: <Briefcase className="w-4 h-4" /> },
           { id: 'education', name: 'Education', icon: <GraduationCap className="w-4 h-4" /> },
-          { id: 'skills', name: 'Skills Grid', icon: <Code className="w-4 h-4" /> },
+          { id: 'skills', name: 'Skills', icon: <Code className="w-4 h-4" /> },
           { id: 'projects', name: 'Projects', icon: <Compass className="w-4 h-4" /> },
           { id: 'certifications', name: 'Credentials', icon: <Award className="w-4 h-4" /> },
           { id: 'languages', name: 'Languages', icon: <Globe className="w-4 h-4" /> },
-          { id: 'custom', name: 'Custom Vol.', icon: <Layers className="w-4 h-4" /> }
+          { id: 'custom', name: 'Custom', icon: <Layers className="w-4 h-4" /> }
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as FormTab)}
-              className={`flex items-center gap-2.5 p-2 px-3 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-2 sm:gap-2.5 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap cursor-pointer shrink-0 ${
                 isActive
                   ? 'bg-slate-900 text-white shadow-md'
                   : 'text-slate-600 hover:bg-slate-100/80 active:scale-95'
@@ -400,7 +400,7 @@ export default function ResumeForm({ data, onChangeData }: ResumeFormProps) {
       </div>
 
       {/* RIGHT FIELDS GRID */}
-      <div className="flex-1 p-4 sm:p-6 overflow-y-auto max-h-[70vh] md:max-h-[calc(100vh-140px)]">
+      <div className="flex-1 p-3 sm:p-6 overflow-y-auto">
         
         {/* TAB 1: PERSONAL INFORMATION */}
         {activeTab === 'personal' && (

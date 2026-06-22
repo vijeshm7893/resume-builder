@@ -1,0 +1,21 @@
+{
+  "name": "Velicx Resume Workbench",
+  "short_name": "Velicx Resume",
+  "description": "Free online resume builder by Velicx — 10+ ATS-friendly templates, real-time preview, and instant PDF export. 100% client-side.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "en",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    {
+      "src": "/velicx-logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -5,11 +5,11 @@ import TemplateRenderer from './components/TemplateRenderer';
 import CustomizePanel from './components/CustomizePanel';
 import ResumeForm from './components/ResumeForm';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  FileText, Download, Upload, Printer, Plus, Trash, Copy, 
+import {
+  FileText, Download, Upload, Printer, Plus, Trash, Copy,
   Settings, PenSquare, ZoomIn, ZoomOut, Maximize2, Minimize2,
   Bookmark, Check, Eye, Code, FileCode, CheckCircle, RefreshCcw, AlertTriangle,
-  X, HelpCircle
+  X, HelpCircle, MoreVertical, Menu
 } from 'lucide-react';
 
 interface ResumeDocument {
@@ -34,6 +34,8 @@ export default function App() {
   const [renamingId, setRenamingId] = useState<string | null>(null);
   const [renamingText, setRenamingText] = useState<string>('');
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving'>('saved');
+  const [isDraftMenuOpen, setIsDraftMenuOpen] = useState(false);
+  const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false);
 
   // Interactive warnings / info toasts
   const [toastMsg, setToastMsg] = useState<{ type: 'success' | 'info' | 'error'; text: string } | null>(null);
@@ -356,7 +358,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white">
         <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-        <p className="mt-4 font-bold text-slate-400 font-mono text-sm tracking-widest uppercase">Loading Workbench Database...</p>
+        <p className="mt-4 font-bold text-slate-400 font-mono text-sm tracking-widest uppercase">Loading Velicx Workbench...</p>
       </div>
     );
   }
@@ -392,47 +394,48 @@ export default function App() {
       </AnimatePresence>
 
       {/* TOP HEADER CONTROLS (No Print) */}
-      <header className="sticky top-0 z-30 bg-slate-900 text-white p-3.5 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-800 shadow-lg no-print">
-        
+      <header className="sticky top-0 z-30 bg-slate-900 text-white px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-3 border-b border-slate-800 shadow-lg no-print">
+
         {/* LOGO */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
-            <FileText className="w-4 h-4 text-white font-black" />
+        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-black/40 ring-1 ring-white/10 flex items-center justify-center shrink-0 overflow-hidden">
+            <img src="/velicx-logo.png" alt="Velicx" className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
           </div>
-          <div>
-            <span className="text-sm font-black tracking-widest uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-              RESUME WORKBENCH
-            </span>
+          <div className="min-w-0">
+            <h1 className="text-[13px] sm:text-sm font-black tracking-wider sm:tracking-widest uppercase bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent block truncate m-0">
+              VELICX <span className="hidden xs:inline text-slate-300/80 font-bold">Resume Workbench</span>
+              <span className="sr-only"> — Free Online Resume Builder</span>
+            </h1>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-[10px] bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded border border-indigo-500/20 uppercase tracking-tighter">
+              <span className="hidden sm:inline-flex text-[10px] bg-indigo-500/10 text-indigo-300 font-mono font-bold px-1.5 py-0.5 rounded border border-indigo-500/20 uppercase tracking-tighter">
                 v1.2 Studio
               </span>
-              <span className="text-[10px] text-slate-400">|</span>
+              <span className="hidden sm:inline text-[10px] text-slate-400">|</span>
               <span className="text-[10px] text-emerald-400 font-mono font-medium flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse inline-block" />
-                {saveStatus === 'saving' ? 'Autosaving...' : 'Draft Saved'}
+                {saveStatus === 'saving' ? 'Saving...' : 'Saved'}
               </span>
             </div>
           </div>
         </div>
 
         {/* DRAFT DROP SELECTOR & ACTIONS */}
-        <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-end w-full sm:w-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 justify-end">
           {/* RENAME SPECIFIC TEXT AREA */}
           {renamingId === activeDoc?.id ? (
             <div className="flex items-center gap-1 bg-slate-800 border border-slate-700 rounded-lg p-1">
-              <input 
+              <input
                 type="text"
                 value={renamingText}
                 onChange={(e) => setRenamingText(e.target.value)}
                 onBlur={commitRenameDraft}
                 onKeyDown={(e) => e.key === 'Enter' && commitRenameDraft()}
                 autoFocus
-                className="bg-transparent text-xs text-white p-1 px-2 focus:outline-none w-44"
+                className="bg-transparent text-xs text-white p-1 px-2 focus:outline-none w-36 sm:w-44"
               />
-              <button 
+              <button
                 onClick={commitRenameDraft}
-                className="p-1 px-2 bg-emerald-600 text-white rounded text-xs"
+                className="p-1.5 px-2 bg-emerald-600 text-white rounded text-xs"
               >
                 Save
               </button>
@@ -447,7 +450,7 @@ export default function App() {
                   localStorage.setItem(ACTIVE_DOC_KEY, e.target.value);
                   showToast('Draft switched successfully.', 'info');
                 }}
-                className="bg-slate-800 hover:bg-slate-850 text-xs font-bold text-slate-200 border border-slate-700 rounded-lg p-2 focus:outline-none cursor-pointer max-w-[180px] sm:max-w-[260px] truncate"
+                className="bg-slate-800 hover:bg-slate-850 text-xs font-bold text-slate-200 border border-slate-700 rounded-lg p-2 focus:outline-none cursor-pointer max-w-[120px] sm:max-w-[260px] truncate"
               >
                 {documents.map((doc) => (
                   <option key={doc.id} value={doc.id}>
@@ -455,11 +458,11 @@ export default function App() {
                   </option>
                 ))}
               </select>
-              
-              {/* Rename Icon */}
+
+              {/* Rename Icon — desktop only */}
               <button
                 onClick={() => startRenameDraft(activeDoc.id, activeDoc.name)}
-                className="p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 hover:text-white"
+                className="hidden sm:inline-flex p-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300 hover:text-white items-center justify-center"
                 title="Rename Current Draft"
               >
                 <PenSquare className="w-3.5 h-3.5" />
@@ -467,8 +470,8 @@ export default function App() {
             </div>
           )}
 
-          {/* Action pills */}
-          <div className="flex items-center gap-1 w-full sm:w-auto justify-center">
+          {/* Desktop action pills */}
+          <div className="hidden sm:flex items-center gap-1">
             <button
               onClick={createNewDraftDocument}
               className="p-2 px-2.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md"
@@ -477,7 +480,7 @@ export default function App() {
               <Plus className="w-3.5 h-3.5" />
               <span className="hidden md:inline">New Draft</span>
             </button>
-            
+
             <button
               onClick={cloneActiveDocument}
               className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold"
@@ -486,7 +489,7 @@ export default function App() {
               <Copy className="w-3.5 h-3.5 inline mr-1 md:mr-0" />
               <span className="hidden md:inline">Duplicate</span>
             </button>
-            
+
             <button
               onClick={() => deleteDocumentDraft(activeDoc.id)}
               disabled={documents.length <= 1}
@@ -496,65 +499,174 @@ export default function App() {
               <Trash className="w-3.5 h-3.5" />
             </button>
           </div>
+
+          {/* Mobile draft-actions menu */}
+          <div className="sm:hidden relative">
+            <button
+              onClick={() => setIsDraftMenuOpen(v => !v)}
+              className="p-2 bg-slate-800 hover:bg-slate-700 active:scale-95 rounded-lg text-slate-200"
+              aria-label="Draft actions"
+            >
+              <MoreVertical className="w-4 h-4" />
+            </button>
+            <AnimatePresence>
+              {isDraftMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setIsDraftMenuOpen(false)} />
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                    className="absolute right-0 top-full mt-2 w-56 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl z-50 py-1 text-sm overflow-hidden"
+                  >
+                    <button
+                      onClick={() => { setIsDraftMenuOpen(false); createNewDraftDocument(); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 text-slate-200 hover:bg-indigo-600/20 active:bg-indigo-600/30"
+                    >
+                      <Plus className="w-4 h-4 text-indigo-400" />
+                      <span className="font-semibold">New Draft</span>
+                    </button>
+                    <button
+                      onClick={() => { setIsDraftMenuOpen(false); cloneActiveDocument(); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 text-slate-200 hover:bg-slate-800 active:bg-slate-700"
+                    >
+                      <Copy className="w-4 h-4 text-slate-400" />
+                      <span className="font-semibold">Duplicate</span>
+                    </button>
+                    <button
+                      onClick={() => { setIsDraftMenuOpen(false); startRenameDraft(activeDoc.id, activeDoc.name); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 text-slate-200 hover:bg-slate-800 active:bg-slate-700"
+                    >
+                      <PenSquare className="w-4 h-4 text-slate-400" />
+                      <span className="font-semibold">Rename</span>
+                    </button>
+                    <div className="h-px bg-slate-800 my-1" />
+                    <button
+                      onClick={() => { setIsDraftMenuOpen(false); deleteDocumentDraft(activeDoc.id); }}
+                      disabled={documents.length <= 1}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 text-rose-300 hover:bg-rose-950/60 active:bg-rose-950 disabled:opacity-40 disabled:hover:bg-transparent"
+                    >
+                      <Trash className="w-4 h-4 text-rose-400" />
+                      <span className="font-semibold">Delete Draft</span>
+                    </button>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </header>
 
       {/* LOWER STATUS AND TOOLBAR ACTIONS BAR */}
-      <section className="bg-white border-b border-slate-200/80 p-2.5 px-4 sm:px-6 flex flex-wrap items-center justify-between gap-3 no-print">
-        
-        {/* Actions layout info */}
-        <div className="flex items-center gap-1.5">
-          <Bookmark className="w-4 h-4 text-slate-400" />
-          <nav className="text-xs text-gray-500 font-medium">
-            Active Workspace: <strong className="text-slate-800 font-bold">{activeDoc?.name}</strong>
+      <section className="bg-white border-b border-slate-200/80 px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between gap-2 no-print">
+
+        {/* Actions layout info — show breadcrumb on desktop, compact title on mobile */}
+        <div className="flex items-center gap-1.5 min-w-0 flex-1">
+          <Bookmark className="w-4 h-4 text-slate-400 shrink-0" />
+          <nav className="text-xs text-gray-500 font-medium truncate">
+            <span className="hidden sm:inline">Active Workspace: </span>
+            <strong className="text-slate-800 font-bold">{activeDoc?.name}</strong>
           </nav>
         </div>
 
         {/* Action utility: Download, Recovery upload, system Print, restore sample */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Recovery Upload button file triggers */}
-          <input 
+          <input
             type="file"
             ref={fileInputRef}
             onChange={triggerJSONRecoveryImport}
             accept=".json"
             className="hidden"
           />
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="p-2 px-3 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 bg-white rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
-            title="Import raw JSON file backup back into editor"
-          >
-            <Upload className="w-3.5 h-3.5 text-blue-600" />
-            <span>Import backup (JSON)</span>
-          </button>
 
-          <button
-            onClick={triggerRawBackupExport}
-            className="p-2 px-3 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 bg-white rounded-lg flex items-center gap-1.5 transition-colors"
-            title="Export full resume in editable JSON data file"
-          >
-            <Download className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Export backup (JSON)</span>
-          </button>
+          {/* Desktop full toolbar */}
+          <div className="hidden sm:flex items-center gap-2">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="p-2 px-3 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 bg-white rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
+              title="Import raw JSON file backup back into editor"
+            >
+              <Upload className="w-3.5 h-3.5 text-blue-600" />
+              <span>Import backup (JSON)</span>
+            </button>
 
-          <button
-            onClick={loadOriginalSamplePreset}
-            className="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-bold text-amber-800 rounded-lg flex items-center gap-1.5 transition-colors"
-            title="Wipe and restore to developer sample template"
-          >
-            <RefreshCcw className="w-3.5 h-3.5 text-amber-600" />
-            <span>Restore developer template</span>
-          </button>
+            <button
+              onClick={triggerRawBackupExport}
+              className="p-2 px-3 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 bg-white rounded-lg flex items-center gap-1.5 transition-colors"
+              title="Export full resume in editable JSON data file"
+            >
+              <Download className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Export backup (JSON)</span>
+            </button>
 
+            <button
+              onClick={loadOriginalSamplePreset}
+              className="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-xs font-bold text-amber-800 rounded-lg flex items-center gap-1.5 transition-colors"
+              title="Wipe and restore to developer sample template"
+            >
+              <RefreshCcw className="w-3.5 h-3.5 text-amber-600" />
+              <span>Restore developer template</span>
+            </button>
+          </div>
+
+          {/* PDF Export — always visible, primary action */}
           <button
             onClick={triggerPrintCascade}
-            className="p-2 px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-extrabold rounded-lg flex items-center gap-1.5 transition-all shadow-md"
+            className="p-2 px-3 sm:px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-extrabold rounded-lg flex items-center gap-1.5 transition-all shadow-md"
             title="Print the Document or Save directly to vector PDF paper size"
           >
             <Printer className="w-4 h-4 text-emerald-100" />
-            <span>Export to PDF / PRINT</span>
+            <span className="hidden xs:inline">PDF</span>
+            <span className="hidden sm:inline">/ PRINT</span>
           </button>
+
+          {/* Mobile More menu — Import / Export / Restore */}
+          <div className="sm:hidden relative">
+            <button
+              onClick={() => setIsMoreMenuOpen(v => !v)}
+              className="p-2 bg-white border border-slate-200 hover:bg-slate-100 active:scale-95 rounded-lg text-slate-700"
+              aria-label="More actions"
+            >
+              <MoreVertical className="w-4 h-4" />
+            </button>
+            <AnimatePresence>
+              {isMoreMenuOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setIsMoreMenuOpen(false)} />
+                  <motion.div
+                    initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                    className="absolute right-0 top-full mt-2 w-60 bg-white border border-slate-200 rounded-xl shadow-2xl z-50 py-1 text-sm overflow-hidden"
+                  >
+                    <button
+                      onClick={() => { setIsMoreMenuOpen(false); fileInputRef.current?.click(); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 hover:bg-slate-50 active:bg-slate-100"
+                    >
+                      <Upload className="w-4 h-4 text-blue-600" />
+                      <span className="font-semibold text-slate-700">Import backup (JSON)</span>
+                    </button>
+                    <button
+                      onClick={() => { setIsMoreMenuOpen(false); triggerRawBackupExport(); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 hover:bg-slate-50 active:bg-slate-100"
+                    >
+                      <Download className="w-4 h-4 text-indigo-600" />
+                      <span className="font-semibold text-slate-700">Export backup (JSON)</span>
+                    </button>
+                    <div className="h-px bg-slate-100 my-1" />
+                    <button
+                      onClick={() => { setIsMoreMenuOpen(false); loadOriginalSamplePreset(); }}
+                      className="w-full text-left px-3.5 py-2.5 flex items-center gap-2.5 hover:bg-amber-50 active:bg-amber-100"
+                    >
+                      <RefreshCcw className="w-4 h-4 text-amber-600" />
+                      <span className="font-semibold text-amber-800">Restore sample</span>
+                    </button>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </section>
 
@@ -569,36 +681,38 @@ export default function App() {
           <div className="flex border-b border-slate-200">
             <button
               onClick={() => setActivePanel('content')}
-              className={`flex-1 p-3.5 text-xs sm:text-sm font-black uppercase tracking-wider border-b-2 transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`flex-1 py-3 sm:py-3.5 px-2 text-xs sm:text-sm font-black uppercase tracking-wide sm:tracking-wider border-b-2 transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
                 activePanel === 'content'
                   ? 'border-indigo-600 text-indigo-700 bg-indigo-50/10'
                   : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-50/50'
               }`}
             >
-              <PenSquare className="w-4 h-4" />
-              <span>Resume Content Editor</span>
+              <PenSquare className="w-4 h-4 shrink-0" />
+              <span className="sm:hidden">Content</span>
+              <span className="hidden sm:inline">Resume Content Editor</span>
             </button>
             <button
               onClick={() => setActivePanel('customize')}
-              className={`flex-1 p-3.5 text-xs sm:text-sm font-black uppercase tracking-wider border-b-2 transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
+              className={`flex-1 py-3 sm:py-3.5 px-2 text-xs sm:text-sm font-black uppercase tracking-wide sm:tracking-wider border-b-2 transition-colors flex items-center justify-center gap-1.5 cursor-pointer ${
                 activePanel === 'customize'
                   ? 'border-indigo-600 text-indigo-700 bg-indigo-50/10'
                   : 'border-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-50/50'
               }`}
             >
-              <Settings className="w-4 h-4" />
-              <span>Visual Style & Presets</span>
+              <Settings className="w-4 h-4 shrink-0" />
+              <span className="sm:hidden">Style</span>
+              <span className="hidden sm:inline">Visual Style & Presets</span>
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto bg-slate-50/30 p-2 sm:p-4">
+          <div className="flex-1 overflow-y-auto bg-slate-50/30 p-2 sm:p-4 pb-24 md:pb-4">
             {activePanel === 'content' ? (
-              <ResumeForm 
-                data={activeDoc.resumeData} 
-                onChangeData={handleUpdateResumeData} 
+              <ResumeForm
+                data={activeDoc.resumeData}
+                onChangeData={handleUpdateResumeData}
               />
             ) : (
-              <CustomizePanel 
+              <CustomizePanel
                 style={activeDoc.styleConfig}
                 onChangeStyle={handleUpdateStyleConfig}
                 activeTemplate={activeDoc.templateId}
@@ -609,39 +723,47 @@ export default function App() {
         </section>
 
         {/* RIGHT COLUMN: REAL-TIME GRAPHICS PREVIEW WINDOW (6/12 width) */}
-        <section className={`flex-1 bg-slate-200/60 p-4 sm:p-6 overflow-y-auto relative ${
+        <section className={`flex-1 bg-slate-200/60 p-3 sm:p-6 pb-24 md:pb-6 overflow-y-auto relative ${
           mobileView === 'preview' ? 'flex flex-col' : 'hidden md:flex md:flex-col'
         }`}>
-          
+
           {/* Zoom & preview toolbar */}
-          <div className="flex items-center justify-between bg-white border border-slate-200 rounded-xl p-2 px-3 mb-4 shadow-sm w-full max-w-lg mx-auto md:w-auto md:max-w-none">
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-slate-500" />
-              <span className="text-xs font-bold text-slate-600 font-mono">Real-time Paper Rendering</span>
+          <div className="flex items-center justify-between bg-white border border-slate-200 rounded-xl p-1.5 px-2 sm:p-2 sm:px-3 mb-3 sm:mb-4 shadow-sm w-full max-w-lg mx-auto md:w-auto md:max-w-none">
+            <div className="flex items-center gap-2 min-w-0">
+              <Eye className="w-4 h-4 text-slate-500 shrink-0" />
+              <span className="text-xs font-bold text-slate-600 font-mono truncate">
+                <span className="hidden sm:inline">Real-time Paper Rendering</span>
+                <span className="sm:hidden">Live Preview</span>
+              </span>
             </div>
-            
+
             {/* Zoom Controllers scale factor */}
-            <div className="flex items-center gap-1 text-xs">
+            <div className="flex items-center gap-1 text-xs shrink-0">
               <button
                 onClick={() => setZoomScale(Math.max(0.35, zoomScale - 0.08))}
-                className="p-1.5 hover:bg-slate-100 rounded text-slate-600"
+                className="p-1.5 hover:bg-slate-100 active:bg-slate-200 rounded text-slate-600"
                 title="Scale Preview Out"
+                aria-label="Zoom out"
               >
                 <ZoomOut className="w-4 h-4" />
               </button>
-              <span className="font-mono bg-slate-100 p-1 px-2.5 rounded text-slate-700 font-bold min-w-[55px] text-center text-[10px]">
+              <span className="font-mono bg-slate-100 px-2 py-1 rounded text-slate-700 font-bold min-w-[44px] text-center text-[10px]">
                 {Math.round(zoomScale * 100)}%
               </span>
               <button
                 onClick={() => setZoomScale(Math.min(1.2, zoomScale + 0.08))}
-                className="p-1.5 hover:bg-slate-100 rounded text-slate-600"
+                className="p-1.5 hover:bg-slate-100 active:bg-slate-200 rounded text-slate-600"
                 title="Scale Preview In"
+                aria-label="Zoom in"
               >
                 <ZoomIn className="w-4 h-4" />
               </button>
               <button
-                onClick={() => setZoomScale(window.innerWidth < 1440 ? 0.72 : 0.85)}
-                className="p-1 px-2 bg-slate-100 hover:bg-slate-200 rounded font-semibold text-[10px] text-slate-600"
+                onClick={() => {
+                  const w = window.innerWidth;
+                  setZoomScale(w < 768 ? 0.45 : w < 1440 ? 0.72 : 0.85);
+                }}
+                className="p-1 px-2 bg-slate-100 hover:bg-slate-200 active:bg-slate-300 rounded font-semibold text-[10px] text-slate-600"
                 title="Fit to Ideal scale bounds"
               >
                 Fit
@@ -670,24 +792,27 @@ export default function App() {
       </main>
 
       {/* FLOATING ACTION BOTTOM NAV (Mobile Screens only - to swap between Editor and Preview) */}
-      <div className="fixed bottom-4 left-4 right-4 z-40 flex bg-slate-950/90 text-white rounded-full p-1.5 shadow-2xl justify-stretch border border-slate-800 md:hidden no-print">
+      <div
+        className="fixed left-3 right-3 z-40 flex bg-slate-950/95 backdrop-blur-md text-white rounded-full p-1 shadow-2xl justify-stretch border border-slate-800 md:hidden no-print"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)' }}
+      >
         <button
           onClick={() => setMobileView('edit')}
-          className={`flex-1 py-3 text-xs font-extrabold rounded-full flex items-center justify-center gap-2 transition-all ${
-            mobileView === 'edit' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+          className={`flex-1 py-2.5 text-xs font-extrabold rounded-full flex items-center justify-center gap-1.5 transition-all active:scale-[0.97] ${
+            mobileView === 'edit' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
           }`}
         >
           <PenSquare className="w-4 h-4" />
-          <span>Editor Console</span>
+          <span>Editor</span>
         </button>
         <button
           onClick={() => setMobileView('preview')}
-          className={`flex-1 py-3 text-xs font-extrabold rounded-full flex items-center justify-center gap-2 transition-all ${
-            mobileView === 'preview' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+          className={`flex-1 py-2.5 text-xs font-extrabold rounded-full flex items-center justify-center gap-1.5 transition-all active:scale-[0.97] ${
+            mobileView === 'preview' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
           }`}
         >
           <Eye className="w-4 h-4" />
-          <span>Live Preview</span>
+          <span>Preview</span>
         </button>
       </div>
 

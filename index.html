@@ -3,12 +3,125 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RESUME WORKBENCH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary SEO -->
+  <title>Velicx Resume Workbench — Free Online Resume Builder &amp; CV Maker</title>
+  <meta name="description" content="Build a professional, ATS-friendly resume in minutes with Velicx Resume Workbench. 10+ modern templates, real-time preview, deep customization, instant PDF export — 100% free and private (runs in your browser)." />
+  <meta name="keywords" content="resume builder, CV maker, free resume builder, ATS resume, online CV, professional resume templates, PDF resume, Velicx, resume workbench" />
+  <meta name="author" content="Velicx" />
+  <meta name="application-name" content="Velicx Resume Workbench" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="canonical" href="https://resume.velicx.com/" />
+
+  <!-- Icons / PWA -->
+  <link rel="icon" type="image/png" href="/velicx-logo.png" />
+  <link rel="apple-touch-icon" href="/velicx-logo.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp, Slack) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Velicx Resume Workbench" />
+  <meta property="og:title" content="Velicx Resume Workbench — Free Online Resume Builder" />
+  <meta property="og:description" content="Craft a polished, ATS-friendly resume in minutes. 10+ modern templates, live preview, instant PDF export. Free and 100% private — your data never leaves the browser." />
+  <meta property="og:url" content="https://resume.velicx.com/" />
+  <meta property="og:image" content="https://resume.velicx.com/velicx-logo.png" />
+  <meta property="og:image:alt" content="Velicx logo" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Velicx Resume Workbench — Free Online Resume Builder" />
+  <meta name="twitter:description" content="Craft a polished, ATS-friendly resume in minutes. 10+ modern templates, live preview, instant PDF export. Free and 100% private." />
+  <meta name="twitter:image" content="https://resume.velicx.com/velicx-logo.png" />
+  <meta name="twitter:image:alt" content="Velicx logo" />
+
+  <!-- Google Fonts — preconnect handshake, then async-friendly stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" />
+
+  <!-- Structured Data: WebApplication + Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://resume.velicx.com/#organization",
+        "name": "Velicx",
+        "url": "https://velicx.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://resume.velicx.com/velicx-logo.png",
+          "width": 512,
+          "height": 512
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://resume.velicx.com/#webapp",
+        "name": "Velicx Resume Workbench",
+        "alternateName": "Velicx Resume Builder",
+        "url": "https://resume.velicx.com/",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "Resume Builder",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript. Modern evergreen browser (Chrome, Firefox, Safari, Edge).",
+        "description": "Free online resume builder with 10+ professional templates, real-time preview, deep customization, and instant PDF export. Privacy-first: all data is stored locally in your browser.",
+        "image": "https://resume.velicx.com/velicx-logo.png",
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "10+ professional resume templates",
+          "Real-time live preview",
+          "ATS-friendly export",
+          "Instant PDF / print export",
+          "Deep visual customization (colors, fonts, spacing)",
+          "Multiple draft workspaces",
+          "JSON import / export for backup",
+          "100% client-side — your data never leaves your device"
+        ],
+        "publisher": { "@id": "https://resume.velicx.com/#organization" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://resume.velicx.com/#website",
+        "url": "https://resume.velicx.com/",
+        "name": "Velicx Resume Workbench",
+        "publisher": { "@id": "https://resume.velicx.com/#organization" },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
+
+  <!-- Crawler & no-JS fallback: gives search engines indexable copy of the value proposition -->
+  <noscript>
+    <div style="max-width:720px;margin:48px auto;padding:24px;font-family:system-ui,sans-serif;line-height:1.6;color:#0f172a;">
+      <h1 style="margin:0 0 12px;font-size:28px;">Velicx Resume Workbench — Free Online Resume Builder</h1>
+      <p>Velicx Resume Workbench is a free, privacy-first online resume builder. Choose from 10+ professional, ATS-friendly templates, customize colors, fonts, and layout in real time, and export a polished PDF in seconds.</p>
+      <p><strong>This application requires JavaScript.</strong> Please enable JavaScript in your browser to start building your resume.</p>
+      <p>Learn more about Velicx at <a href="https://velicx.com/">velicx.com</a>.</p>
+    </div>
+  </noscript>
+
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
