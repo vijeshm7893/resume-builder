@@ -2,7 +2,16 @@
 User-agent: *
 Allow: /
 
-# Disallow crawling of the build/dev artifacts (defense in depth — none of these should ever ship)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Disallow build/dev artifacts
 Disallow: /dist/
 Disallow: /node_modules/
 Disallow: /.env
