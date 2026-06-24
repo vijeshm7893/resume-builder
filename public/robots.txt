@@ -1,4 +1,4 @@
-# https://resume.velicx.com/robots.txt
+# https://resume.velicx.in/robots.txt
 User-agent: *
 Allow: /
 
@@ -8,4 +8,4 @@ Disallow: /node_modules/
 Disallow: /.env
 Disallow: /.git/
 
-Sitemap: https://resume.velicx.com/sitemap.xml
+Sitemap: https://resume.velicx.in/sitemap.xml
